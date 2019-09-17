@@ -20,6 +20,9 @@ tl = {}  # date: file contents
 tdesktop = Path('tdesktop').resolve()
 schemes = Path('schemes').resolve()
 
+# we start not knowing in which branch we are
+in_dev_branch = False
+
 if not schemes.is_dir():
     schemes.mkdir(parents=True)
 
@@ -122,18 +125,25 @@ class Scheme:
     def __repr__(self):
         return '\n'.join(map(repr, self.definitions.values()))
 
+def ensure_dev_branch():
+    global in_dev_branch
+    if not in_dev_branch:
+        run(('git', 'checkout', 'dev', '--force'))
+        in_dev_branch = True
+
 @in_dir(tdesktop)
 def pull():
     if not (tdesktop / '.git').is_dir():
         run(('git', 'clone', 'git@github.com:telegramdesktop/tdesktop.git', '.'))
 
-    run(('git', 'checkout', 'dev', '--force'))
+    ensure_dev_branch()
     run(('git', 'reset', '--hard', 'HEAD'))
     run(('git', 'pull'))
 
 
 @in_dir(tdesktop)
 def extract():
+    global in_dev_branch
     tl_paths = list(map(Path, (
         'Telegram/Resources/tl/api.tl',
         'Telegram/Resources/scheme.tl',
@@ -145,12 +155,16 @@ def extract():
     layer_re = re.compile(rb'static const mtpPrime mtpCurrentLayer = (\d+);')
 
     for tl_path in tl_paths:
-        run(('git', 'checkout', 'dev', '--force'))
+        ensure_dev_branch()
         for line in run(git_log + [tl_path], stdout=PIPE).stdout.decode().split('\n'):
             commit, date = line.split()
             date = int(date)
+            out_path = schemes / f'{date}.tl'
+            if out_path.is_file():
+                continue  # we already have this scheme cached
 
             run(('git', 'checkout', commit, '--force'))
+            in_dev_branch = False
             if not tl_path.is_file():
                 continue  # last commit when this file was renamed
 
@@ -161,7 +175,7 @@ def extract():
                     if match:
                         layer = match.group(1)
 
-            with open(tl_path, 'rb') as fin, open(schemes / f'{date}.tl', 'wb') as fout:
+            with tl_path.open('rb') as fin, out_path.open('wb') as fout:
                 data = fin.read()
                 if layer is not None:
                     data += b'\n// LAYER ' + layer + b'\n'
