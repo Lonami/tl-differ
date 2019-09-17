@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="description" content="Online Type Language differ to aid Telegram developers determine the changeset between TL layers">
+  <title>TL Differ</title>
+  <style>
+body {
+  background-color: #eee;
+  font-family: arial;
+}
+main {
+  max-width: 60em;
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  box-shadow: 4px 4px 2px #aaa;
+}
+.intro {
+  padding: 1em;
+}
+.added {
+  background-color: #efe;
+  padding: 1em;
+  border: 0.5em solid #afa;
+}
+.new {
+  background-color: #cfc;
+}
+.removed {
+  background-color: #fee;
+  padding: 1em;
+  border: 0.5em solid #faa;
+}
+.old {
+  background-color: #fcc;
+}
+.changed {
+  background-color: #eef;
+  padding: 1em;
+  border: 0.5em solid #aaf;
+}
+.error {
+  background-color: #faa;
+  padding: 0.5em;
+  border: 0.5em solid #ff0;
+}
+.diff ul {
+  font-family: monospace;
+  font-size: large;
+  list-style-type: none;
+}
+.diff li {
+  margin: 0.1em 0;
+}
+.info {
+  border-bottom: 1px dashed #000;
+}
+td, th, td {
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  text-align: center;
+}
+th a {
+  color: #fff;
+}
+th[scope="row"] {
+  text-align: right;
+}
+tr:nth-child(even) {
+  background-color: #eee;
+}
+thead {
+    background-color: #777;
+    color: #fff;
+}
+th[scope="row"] {
+  background-color: #ddf;
+}
+table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  font-size: .8rem;
+}
+  </style>
+</head>
+<body>
+<main>
+  <div class="intro">
+    <h1>Type Language Differ</h1>
+    <p>Welcome to the online
+      <a href="https://core.telegram.org/mtproto/TL">Type Language</a>
+      <a href="https://en.wikipedia.org/wiki/File_comparison">differ</a>!</p>
+
+    <p>This page is meant to be used to assist Telegram developers to easily
+      see the biggest changes between different TL layers. These layers are
+      what describes Telegram's API. Different things in the layers, different
+      things you can do.</p>
+
+    <p>Under the "Changed" section, fields with red background were removed,
+      and fields with green background were added. If it changed, you will see
+      "red → green".</p>
+
+    <p>To begin, select from which layer up to which layer you would like to
+      see the changes.</p>
+
+    <p>Calculate diff
+      <label for="select_from">from</label> <select id="select_from" onchange="change_select_to()"></select>
+      <label for="select_to">to</label> <select id="select_to" onchange="change_select_from()"></select>
+      <br>
+      <input type="checkbox" id="merge-layers" name="merge-layers" onchange="change_used_diff(event)" checked>
+      <label
+        class="info"
+        title="Telegram sometimes publishes updates to a layer without increasing the layer number. By default (checked), only the most recent version of a layer is shown, but you can uncheck this to show all the known revisions of a layer."
+        for="merge-layers">Show only the most recent version for a layer (?)</label>
+    </p>
+
+    <h2>Difference Statistics</h2>
+    <table id="stats">
+      <thead>
+        <tr>
+          <th scope="col">Kind</th>
+          <th scope="col"><a href="#added_div">Added</a></th>
+          <th scope="col"><a href="#removed_div">Removed</a></th>
+          <th scope="col"><a href="#changed_div">Changed</a></th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Types</th><td>0</td><td>0</td><td>0</td></tr>
+        <tr><th scope="row">Functions</th><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="div_diff" class="diff">
+    <div id="added_div" class="added">
+      <h2>Added</h2>
+      <div id="added_types_div">
+        <h3>Types <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="added_types"></ul>
+      </div>
+      <div id="added_functions_div">
+        <h3>Functions <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="added_functions"></ul>
+      </div>
+    </div>
+    <div id="removed_div" class="removed">
+      <h2>Removed</h2>
+      <div id="removed_types_div">
+        <h3>Types <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="removed_types"></ul>
+      </div>
+      <div id="removed_functions_div">
+        <h3>Functions <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="removed_functions"></ul>
+      </div>
+    </div>
+    <div id="changed_div" class="changed">
+      <h2>Changed</h2>
+      <div id="changed_types_div">
+        <h3>Types <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="changed_types"></ul>
+      </div>
+      <div id="changed_functions_div">
+        <h3>Functions <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="changed_functions"></ul>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="diff.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
