@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TL diff</title>
+  <style>
+body {
+  background-color: #eee;
+  font-family: arial;
+}
+main {
+  max-width: 60em;
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  box-shadow: 4px 4px 2px #aaa;
+}
+.intro {
+  padding: 1em;
+}
+.added {
+  background-color: #efe;
+  padding: 1em;
+  border: 0.5em solid #afa;
+}
+.new {
+  background-color: #cfc;
+}
+.removed {
+  background-color: #fee;
+  padding: 1em;
+  border: 0.5em solid #faa;
+}
+.old {
+  background-color: #fcc;
+}
+.changed {
+  background-color: #eef;
+  padding: 1em;
+  border: 0.5em solid #aaf;
+}
+.error {
+  background-color: #faa;
+  padding: 0.5em;
+  border: 0.5em solid #ff0;
+}
+.diff ul {
+  font-family: monospace;
+  font-size: large;
+  list-style-type: none;
+}
+.diff li {
+  margin: 0.1em 0;
+}
+  </style>
+</head>
+<body>
+<main>
+  <div class="intro">
+    <h1>Type Language Differ</h1>
+    <p>Welcome to the online
+      <a href="https://core.telegram.org/mtproto/TL">Type Language</a>
+      <a href="https://en.wikipedia.org/wiki/File_comparison">differ</a>!</p>
+
+    <p>This page is meant to be used to assist Telegram developers to easily
+      see the biggest changes between different TL layers. These layers are
+      what describes Telegram's API. Different things in the layers, different
+      things you can do.</p>
+
+    <p>Under the "Changed" section, fields with red background were removed,
+      and fields with green background were added. If it changed, you will see
+      "red → green".</p>
+
+    <p>To begin, select from which layer up to which layer you would like to
+      see the changes.</p>
+
+    <select id="select_from" onchange="change_select_to()"></select>
+    <select id="select_to" onchange="change_select_from()"></select>
+  </div>
+  <div id="div_diff" class="diff">
+    <div class="added">
+      <h2>Added <button onclick="toggle_expand(event)">Expand/collapse all</button></h2>
+      <h3>Types</h3>
+      <ul id="added_types"></ul>
+      <h3>Functions</h3>
+      <ul id="added_functions"></ul>
+    </div>
+    <div class="removed">
+      <h2>Removed <button onclick="toggle_expand(event)">Expand/collapse all</button></h2>
+      <h3>Types</h3>
+      <ul id="removed_types"></ul>
+      <h3>Functions</h3>
+      <ul id="removed_functions"></ul>
+    </div>
+    <div class="changed">
+      <h2>Changed <button onclick="toggle_expand(event)">Expand/collapse all</button></h2>
+      <h3>Types</h3>
+      <ul id="changed_types"></ul>
+      <h3>Functions</h3>
+      <ul id="changed_functions"></ul>
+    </div>
+  </div>
+</main>
+<script src="diff.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
