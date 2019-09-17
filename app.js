@@ -20,8 +20,19 @@ function layer_name(layer) {
 
 function toggle_expand(event) {
     const div = event.target.parentElement.parentElement;
-    for (const details of div.getElementsByTagName('details')) {
-        details.open = !details.open;
+    const tags = div.getElementsByTagName('details');
+
+    // open all if any is closed, close all only if all are open
+    let any_closed = false;
+    for (const details of tags) {
+        if (!details.open) {
+            any_closed = true;
+            break;
+        }
+    }
+
+    for (const details of tags) {
+        details.open = any_closed;
     }
 }
 
