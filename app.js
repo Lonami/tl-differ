@@ -20,10 +20,8 @@ function layer_name(layer) {
 
 function toggle_expand(event) {
     const div = event.target.parentElement.parentElement;
-    console.log(div);
     for (const details of div.getElementsByTagName('details')) {
         details.open = !details.open;
-        console.log(details);
     }
 }
 
@@ -159,11 +157,9 @@ function extend_change_list(list, items) {
         // fields are a list because their order matters, so that's why
         // it's not a map already. we however work better with maps here.
         old_args = {};
-        try {
-            for (arg of item.before.fields) {
-                old_args[arg.name] = arg;
-            }
-        } catch (e) { console.log(item); }
+        for (arg of item.before.fields) {
+            old_args[arg.name] = arg;
+        }
         new_args = {};
         for (arg of item.after.fields) {
             new_args[arg.name] = arg;
