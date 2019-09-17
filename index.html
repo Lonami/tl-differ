@@ -86,26 +86,38 @@ label {
       for="merge-layers">Show only the most recent version for a layer (?)</label>
   </div>
   <div id="div_diff" class="diff">
-    <div class="added">
-      <h2>Added <button onclick="toggle_expand(event)">Expand/collapse all</button></h2>
-      <h3>Types</h3>
-      <ul id="added_types"></ul>
-      <h3>Functions</h3>
-      <ul id="added_functions"></ul>
+    <div id="added_div" class="added">
+      <h2>Added</h2>
+      <div id="added_types_div">
+        <h3>Types <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="added_types"></ul>
+      </div>
+      <div id="added_functions_div">
+        <h3>Functions <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="added_functions"></ul>
+      </div>
     </div>
-    <div class="removed">
-      <h2>Removed <button onclick="toggle_expand(event)">Expand/collapse all</button></h2>
-      <h3>Types</h3>
-      <ul id="removed_types"></ul>
-      <h3>Functions</h3>
-      <ul id="removed_functions"></ul>
+    <div id="removed_div" class="removed">
+      <h2>Removed</h2>
+      <div id="removed_types_div">
+        <h3>Types <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="removed_types"></ul>
+      </div>
+      <div id="removed_functions_div">
+        <h3>Functions <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="removed_functions"></ul>
+      </div>
     </div>
-    <div class="changed">
-      <h2>Changed <button onclick="toggle_expand(event)">Expand/collapse all</button></h2>
-      <h3>Types</h3>
-      <ul id="changed_types"></ul>
-      <h3>Functions</h3>
-      <ul id="changed_functions"></ul>
+    <div id="changed_div" class="changed">
+      <h2>Changed</h2>
+      <div id="changed_types_div">
+        <h3>Types <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="changed_types"></ul>
+      </div>
+      <div id="changed_functions_div">
+        <h3>Functions <button onclick="toggle_expand(event)">Expand/collapse all</button></h3>
+        <ul id="changed_functions"></ul>
+      </div>
     </div>
   </div>
 </main>

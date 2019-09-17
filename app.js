@@ -9,6 +9,16 @@ const removed_functions = document.getElementById('removed_functions');
 const changed_types = document.getElementById('changed_types');
 const changed_functions = document.getElementById('changed_functions');
 
+const added_div = document.getElementById('added_div');
+const removed_div = document.getElementById('removed_div');
+const changed_div = document.getElementById('changed_div');
+const added_types_div = document.getElementById('added_types_div');
+const added_functions_div = document.getElementById('added_functions_div');
+const removed_types_div = document.getElementById('removed_types_div');
+const removed_functions_div = document.getElementById('removed_functions_div');
+const changed_types_div = document.getElementById('changed_types_div');
+const changed_functions_div = document.getElementById('changed_functions_div');
+
 const collapsed_diff = [];
 for (const layer of DIFF) {
     const cdl = collapsed_diff.length;
@@ -292,6 +302,18 @@ function update_changed(from, to, kind) {
     }
 }
 
+function set_visible_ty_fn(main, ty, fn, where) {
+    const ty_count = Object.keys(where.types).length;
+    const fn_count = Object.keys(where.functions).length;
+    if (ty_count === 0 && fn_count === 0) {
+        main.style.display = 'none';
+    } else {
+        main.style.display = '';
+        ty.style.display = ty_count === 0 ? 'none' : '';
+        fn.style.display = fn_count === 0 ? 'none' : '';
+    }
+}
+
 function load_diff() {
     div_diff.style.display = 'none';
     let from_idx = Number(select_from.value);
@@ -335,6 +357,11 @@ function load_diff() {
     extend_list(removed_functions, diff.removed.functions);
     extend_change_list(changed_types, diff.changed.types);
     extend_change_list(changed_functions, diff.changed.functions);
+
+    // default to showing everything, hide as needed
+    set_visible_ty_fn(added_div, added_types_div, added_functions_div, diff.added);
+    set_visible_ty_fn(removed_div, removed_types_div, removed_functions_div, diff.removed);
+    set_visible_ty_fn(changed_div, changed_types_div, changed_functions_div, diff.changed);
 
     div_diff.style.display = '';
 }
