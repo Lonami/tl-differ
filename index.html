@@ -53,6 +53,9 @@ main {
 .diff li {
   margin: 0.1em 0;
 }
+label {
+  border-bottom: 1px dashed #000;
+}
   </style>
 </head>
 <body>
@@ -77,6 +80,10 @@ main {
 
     <select id="select_from" onchange="change_select_to()"></select>
     <select id="select_to" onchange="change_select_from()"></select>
+    <input type="checkbox" id="merge-layers" name="merge-layers" onchange="change_used_diff(event)" checked>
+    <label
+      title="Telegram sometimes publishes updates to a layer without increasing the layer number. By default (checked), only the most recent version of a layer is shown, but you can uncheck this to show all the known revisions of a layer."
+      for="merge-layers">Show only the most recent version for a layer (?)</label>
   </div>
   <div id="div_diff" class="diff">
     <div class="added">

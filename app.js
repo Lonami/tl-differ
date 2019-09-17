@@ -9,6 +9,26 @@ const removed_functions = document.getElementById('removed_functions');
 const changed_types = document.getElementById('changed_types');
 const changed_functions = document.getElementById('changed_functions');
 
+const collapsed_diff = [];
+for (const layer of DIFF) {
+    const cdl = collapsed_diff.length;
+    if (cdl === 0
+            || collapsed_diff[cdl - 1].layer === null
+            || collapsed_diff[cdl - 1].layer !== layer.layer) {
+        collapsed_diff.push(layer); // first or different
+    } else {
+        collapsed_diff[cdl - 1] = layer; // replace same layer (keep latest)
+    }
+}
+
+let used_diff = collapsed_diff;
+
+function change_used_diff(event) {
+    used_diff = event.target.checked ? collapsed_diff : DIFF;
+    fill_select_boxes();
+    load_diff();
+}
+
 function layer_name(layer) {
     const name = layer['layer'] == null ? 'Unknown layer' : `Layer ${layer['layer']}`;
     const date = new Date(layer['date'] * 1000);
@@ -34,6 +54,29 @@ function toggle_expand(event) {
     for (const details of tags) {
         details.open = any_closed;
     }
+}
+
+function fill_select_boxes() {
+    empty_node(select_from);
+    empty_node(select_to);
+    for (let i = 0; i < used_diff.length; ++i) {
+        const layer = used_diff[i];
+        if (i !== used_diff.length - 1) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.innerText = layer_name(layer);
+            select_from.appendChild(option);
+        }
+        if (i !== 0) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.innerText = layer_name(layer);
+            select_to.appendChild(option);
+        }
+    }
+
+    select_from.selectedIndex = used_diff.length - 2;
+    select_to.selectedIndex = used_diff.length - 2;
 }
 
 function change_select_from() {
@@ -251,8 +294,25 @@ function update_changed(from, to, kind) {
 
 function load_diff() {
     div_diff.style.display = 'none';
-    const from_idx = Number(select_from.value);
-    const to_idx = Number(select_to.value);
+    let from_idx = Number(select_from.value);
+    let to_idx = Number(select_to.value);
+    if (used_diff == collapsed_diff) {
+        // figure out indices in the original diff with all data
+        let needle = used_diff[from_idx];
+        for (let i = from_idx; i < DIFF.length; ++i) {
+            if (needle == DIFF[i]) {
+                from_idx = i;
+                break;
+            }
+        }
+        needle = used_diff[to_idx];
+        for (let i = to_idx; i < DIFF.length; ++i) {
+            if (needle == DIFF[i]) {
+                to_idx = i;
+                break;
+            }
+        }
+    }
     const diff = {
         added: {types: {}, functions: {}},
         removed: {types: {}, functions: {}},
@@ -283,22 +343,5 @@ div_diff.style.display = 'none';
 select_from.addEventListener('change', load_diff);
 select_to.addEventListener('change', load_diff);
 
-for (let i = 0; i < DIFF.length; ++i) {
-    const layer = DIFF[i];
-    if (i !== DIFF.length - 1) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.innerText = layer_name(layer);
-        select_from.appendChild(option);
-    }
-    if (i !== 0) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.innerText = layer_name(layer);
-        select_to.appendChild(option);
-    }
-}
-
-select_from.selectedIndex = DIFF.length - 2;
-select_to.selectedIndex = DIFF.length - 2;
+fill_select_boxes();
 load_diff();
