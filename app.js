@@ -136,13 +136,13 @@ function extend_change_list(list, items) {
         details.appendChild(summary);
 
         const ul = document.createElement('ul');
-        if (item.before.id !== item.after.id) {
-            if (typeof item.before.id === 'undefined') {
+        if (item.before.id !== item.after.id) { // neither null nor the same
+            if (item.before.id === null) {
                 append_li(ul, {
                     class: 'new',
                     value: `#${('00000000' + item.after.id.toString(16)).slice(-8)}`
                 });
-            } else if (typeof item.after.id === 'undefined') {
+            } else if (typeof item.after.id === null) {
                 append_li(ul, {
                     class: 'old',
                     value: `#${('00000000' + item.before.id.toString(16)).slice(-8)}`
