@@ -116,7 +116,7 @@ class Scheme:
     def to_dict(self):
         return {
             'layer': self.layer, 
-            'definitions': [x.to_dict() or x in sorted(self.definitions.items(), key=lambda t: t[0])]
+            'definitions': [x.to_dict() for x in sorted(self.definitions.items(), key=lambda t: t[0])]
         }
 
     def __repr__(self):
