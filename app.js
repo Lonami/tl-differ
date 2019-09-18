@@ -1,6 +1,7 @@
 const select_from = document.getElementById('select_from');
 const select_to = document.getElementById('select_to');
 const div_diff = document.getElementById('div_diff');
+const stats = document.getElementById('stats');
 
 const added_types = document.getElementById('added_types');
 const added_functions = document.getElementById('added_functions');
@@ -314,8 +315,29 @@ function set_visible_ty_fn(main, ty, fn, where) {
     }
 }
 
+function set_td_text(tr, index, object) {
+    tr.children[index].replaceChild(
+        document.createTextNode(Object.keys(object).length.toString()),
+        tr.children[index].lastChild
+    )
+}
+
+function fill_stats(diff) {
+    const tbody = stats.children[1];
+    const ty = tbody.children[0];
+    const fn = tbody.children[1];
+
+    set_td_text(ty, 1, diff.added.types);
+    set_td_text(fn, 1, diff.added.functions);
+    set_td_text(ty, 2, diff.removed.types);
+    set_td_text(fn, 2, diff.removed.functions);
+    set_td_text(ty, 3, diff.changed.types);
+    set_td_text(fn, 3, diff.changed.functions);
+}
+
 function load_diff() {
     div_diff.style.display = 'none';
+
     let from_idx = Number(select_from.value);
     let to_idx = Number(select_to.value);
     if (used_diff == collapsed_diff) {
@@ -363,6 +385,7 @@ function load_diff() {
     set_visible_ty_fn(removed_div, removed_types_div, removed_functions_div, diff.removed);
     set_visible_ty_fn(changed_div, changed_types_div, changed_functions_div, diff.changed);
 
+    fill_stats(diff);
     div_diff.style.display = '';
 }
 
