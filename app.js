@@ -134,8 +134,11 @@ function append_li(ul, ...args) {
     }
 }
 
-function append_li_migrate(ul, from, to) {
+function append_li_migrate(ul, from, to, name) {
     const li = document.createElement('li');
+    if (name !== undefined) {
+        li.appendChild(document.createTextNode(`${name} `));
+    }
     {
         const span = document.createElement('span');
         span.className = 'old';
@@ -234,11 +237,7 @@ function extend_change_list(list, items) {
         for (arg of item.before.fields) {
             const current = new_args[arg.name];
             if (typeof current !== 'undefined' && arg.type !== current.type) {
-                append_li_migrate(
-                    ul,
-                    `${arg.name}:${arg.type}`,
-                    `${current.name}:${current.type}`
-                );
+                append_li_migrate(ul, arg.type, current.type, arg.name);
             }
         }
 
