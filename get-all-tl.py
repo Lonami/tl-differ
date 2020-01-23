@@ -239,7 +239,7 @@ def main():
     load_tl()
     with open('diff.js', 'w') as fd:
         fd.write('DIFF=')
-        json.dump(gen_index(), fd)
+        json.dump(gen_index(), fd, indent=0, separators=(',', ':'), sort_keys=True)
         fd.write('\n')
 
 if __name__ == '__main__':
