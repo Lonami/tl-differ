@@ -238,9 +238,9 @@ def main():
     extract()
     load_tl()
     with open('diff.js', 'w') as fd:
-        fd.write('DIFF=')
-        json.dump(gen_index(), fd, indent=0, separators=(',', ':'), sort_keys=True)
-        fd.write('\n')
+        fd.write('DIFF=JSON.parse(')
+        fd.write(repr(json.dumps(gen_index(), separators=(',', ':'), sort_keys=True)))
+        fd.write(');\n')
 
 if __name__ == '__main__':
     main()
