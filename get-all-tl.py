@@ -86,7 +86,7 @@ class Definition:
 
     def __eq__(self, other):
         return (
-            self.id == other.id 
+            self.id == other.id
             and self.function == other.function
             and self.name == other.name
             and self.type == other.type
@@ -118,7 +118,7 @@ class Scheme:
 
     def to_dict(self):
         return {
-            'layer': self.layer, 
+            'layer': self.layer,
             'definitions': [x.to_dict() for x in sorted(self.definitions.items(), key=lambda t: t[0])]
         }
 
@@ -223,8 +223,8 @@ def gen_index():
             li.sort(key=lambda x: (x['before']['name'], x['after']['name']))
 
         deltas.append({
-            'date': date, 
-            'layer': current.layer, 
+            'date': date,
+            'layer': current.layer,
             'added': {'types': added[0], 'functions': added[1]},
             'removed': {'types': removed[0], 'functions': removed[1]},
             'changed': {'types': changed[0], 'functions': changed[1]}
@@ -233,15 +233,56 @@ def gen_index():
 
     return deltas
 
+def gen_rss(deltas):
+    last = None
+    rev = 1
+    for delta in sorted(deltas, key=lambda d: d['date']):
+        date = datetime.datetime.fromtimestamp(delta['date'], datetime.timezone.utc).isoformat()
+        if delta['layer'] == last:
+            rev += 1
+            revision = f' Revision {rev}'
+        else:
+            rev = 1
+            last = delta['layer']
+            revision = ''
+
+        added = len(delta['added']['types']) + len(delta['added']['functions'])
+        removed = len(delta['removed']['types']) + len(delta['removed']['functions'])
+        changed = len(delta['changed']['types']) + len(delta['changed']['functions'])
+
+        yield f'''<entry xml:lang="en">
+        <title>Layer {delta['layer'] or '???'}{revision}</title>
+        <published>{date}</published>
+        <updated>{date}</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/{delta['date']}</id>
+        <content type="html">&lt;p&gt;{added} added, {removed} removed, {changed} changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+'''
+
 def main():
     pull()
     extract()
     load_tl()
+    deltas = gen_index()
     with open('diff.js', 'w') as fd:
         fd.write('DIFF=JSON.parse(')
-        fd.write(repr(json.dumps(gen_index(), separators=(',', ':'), sort_keys=True)))
+        fd.write(repr(json.dumps(deltas, separators=(',', ':'), sort_keys=True)))
         fd.write(');\n')
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    with open('atom.xml', 'w') as fd:
+        fd.write(f'''<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Type Language Differ</title>
+	<link href="https://diff.telethon.dev/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://diff.telethon.dev/"/>
+    <updated>{now.isoformat()}</updated>
+    <id>https://diff.telethon.dev/atom.xml</id>''')
+        for entry in gen_rss(deltas):
+            fd.write(entry)
+        fd.write('</feed>')
 
 if __name__ == '__main__':
     main()
-
