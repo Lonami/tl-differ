@@ -34,6 +34,14 @@ for (const layer of DIFF) {
 
 let used_diff = collapsed_diff;
 
+const get_url_query_param = param =>
+    (
+        (window.location.href.split("?")[1] || "")
+            .split("&")
+            .map(part => part.split("="))
+            .find(kv => kv[0] == param) || []
+    )[1] || null;
+
 function change_used_diff(event) {
     used_diff = event.target.checked ? collapsed_diff : DIFF;
     fill_select_boxes();
@@ -41,12 +49,12 @@ function change_used_diff(event) {
 }
 
 function layer_name(layer) {
-    const name = layer['layer'] == null ? 'Unknown layer' : `Layer ${layer['layer']}`;
-    const date = new Date(layer['date'] * 1000);
+    const name = layer.layer == null ? 'Unknown layer' : `Layer ${layer.layer}`;
+    const date = new Date(layer.date * 1000);
     const year = date.getFullYear();
     const month = `0${date.getMonth() + 1}`.slice(-2);
     const day = `0${date.getDate()}`.slice(-2);
-    return `[${year}/${month}/${day}] ${name}`;
+    return `[${year}-${month}-${day}] ${name}`;
 }
 
 function toggle_expand(event) {
@@ -67,7 +75,12 @@ function toggle_expand(event) {
     }
 }
 
-function fill_select_boxes() {
+function fill_select_boxes(from_layer, to_layer) {
+    let from = null;
+    let to = null;
+    from_layer = parseInt(from_layer);
+    to_layer = parseInt(to_layer);
+
     empty_node(select_from);
     empty_node(select_to);
     for (let i = 0; i < used_diff.length; ++i) {
@@ -84,10 +97,16 @@ function fill_select_boxes() {
             option.innerText = layer_name(layer);
             select_to.appendChild(option);
         }
+        if (from === null && from_layer == layer.layer) {
+            from = i;
+        }
+        if (to === null && to_layer == layer.layer) {
+            to = i - 1;
+        }
     }
 
-    select_from.selectedIndex = used_diff.length - 2;
-    select_to.selectedIndex = used_diff.length - 2;
+    select_from.selectedIndex = from || used_diff.length - 2;
+    select_to.selectedIndex = to || used_diff.length - 2;
 }
 
 function change_select_from() {
@@ -392,5 +411,5 @@ div_diff.style.display = 'none';
 select_from.addEventListener('change', load_diff);
 select_to.addEventListener('change', load_diff);
 
-fill_select_boxes();
+fill_select_boxes(get_url_query_param('from'), get_url_query_param('to'));
 load_diff();
