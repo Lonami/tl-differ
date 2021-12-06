@@ -1,0 +1,8 @@
+{
+  "arrowParens": "avoid",
+  "bracketSameLine": true,
+  "noBracketSpacing": true,
+  "printWidth": 100,
+  "htmlWhitespaceSensitivity": "strict",
+  "semi": false
+}
