@@ -438,18 +438,10 @@ function search_first_type(ppok, srqyr) {
 
                 if (
                     (
-                        // srqyr.indexOf(functionid) > -1 ||
-                        // srqyr.indexOf(functionname) > -1
                         srqyr == functionname ||
                         srqyr == functionid
                     )
-                    /*&&
-                    (
-                        // TODO :(
-                        avr[itrtr].indexOf(soka) 
-                    ) */
                 ) {
-                    // console.log(addfunction);
                     addfunction["layer"] = layer_no;
                     addfunction["date"] = layer_date;
                     addfunction["diffindex"] = {
