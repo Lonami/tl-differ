@@ -3,7 +3,7 @@
 	<title>Type Language Differ</title>
 	<link href="https://diff.telethon.dev/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://diff.telethon.dev/"/>
-    <updated>2022-08-30T11:02:24.673681+00:00</updated>
+    <updated>2022-09-20T13:38:09.667710+00:00</updated>
     <id>https://diff.telethon.dev/atom.xml</id><entry xml:lang="en">
         <title>Layer 15</title>
         <published>2014-05-30T08:53:19+00:00</published>
@@ -2288,6 +2288,78 @@
         <link href="https://diff.telethon.dev/" type="text/html"/>
         <id>https://diff.telethon.dev/1659516210</id>
         <content type="html">&lt;p&gt;0 added, 0 removed, 1 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 145</title>
+        <published>2022-09-02T17:14:28+00:00</published>
+        <updated>2022-09-02T17:14:28+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662138868</id>
+        <content type="html">&lt;p&gt;3 added, 0 removed, 1 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 145 Revision 2</title>
+        <published>2022-09-02T17:14:29+00:00</published>
+        <updated>2022-09-02T17:14:29+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662138869</id>
+        <content type="html">&lt;p&gt;18 added, 0 removed, 10 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 145 Revision 3</title>
+        <published>2022-09-02T17:14:30+00:00</published>
+        <updated>2022-09-02T17:14:30+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662138870</id>
+        <content type="html">&lt;p&gt;5 added, 1 removed, 6 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 145 Revision 4</title>
+        <published>2022-09-02T17:14:31+00:00</published>
+        <updated>2022-09-02T17:14:31+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662138871</id>
+        <content type="html">&lt;p&gt;9 added, 1 removed, 3 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 145 Revision 5</title>
+        <published>2022-09-02T17:14:32+00:00</published>
+        <updated>2022-09-02T17:14:32+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662138872</id>
+        <content type="html">&lt;p&gt;1 added, 0 removed, 7 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 145 Revision 6</title>
+        <published>2022-09-02T17:14:33+00:00</published>
+        <updated>2022-09-02T17:14:33+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662138873</id>
+        <content type="html">&lt;p&gt;2 added, 0 removed, 0 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 145 Revision 7</title>
+        <published>2022-09-02T17:14:34+00:00</published>
+        <updated>2022-09-02T17:14:34+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662138874</id>
+        <content type="html">&lt;p&gt;2 added, 0 removed, 1 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 146</title>
+        <published>2022-09-12T05:06:26+00:00</published>
+        <updated>2022-09-12T05:06:26+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1662959186</id>
+        <content type="html">&lt;p&gt;4 added, 0 removed, 2 changed&lt;/p&gt;</content>
         <author><name>TL Differ Team</name></author>
     </entry>
 </feed>
