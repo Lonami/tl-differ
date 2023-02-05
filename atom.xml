@@ -3,7 +3,7 @@
 	<title>Type Language Differ</title>
 	<link href="https://diff.telethon.dev/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://diff.telethon.dev/"/>
-    <updated>2022-12-31T17:33:33.713441+00:00</updated>
+    <updated>2023-02-05T14:12:36.920158+00:00</updated>
     <id>https://diff.telethon.dev/atom.xml</id><entry xml:lang="en">
         <title>Layer 15</title>
         <published>2014-05-30T08:53:19+00:00</published>
@@ -2513,6 +2513,24 @@
         <link href="https://diff.telethon.dev/" type="text/html"/>
         <id>https://diff.telethon.dev/1672050248</id>
         <content type="html">&lt;p&gt;1 added, 1 removed, 4 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 152</title>
+        <published>2023-02-02T18:12:31+00:00</published>
+        <updated>2023-02-02T18:12:31+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1675361551</id>
+        <content type="html">&lt;p&gt;30 added, 2 removed, 10 changed&lt;/p&gt;</content>
+        <author><name>TL Differ Team</name></author>
+    </entry>
+<entry xml:lang="en">
+        <title>Layer 152 Revision 2</title>
+        <published>2023-02-02T18:12:32+00:00</published>
+        <updated>2023-02-02T18:12:32+00:00</updated>
+        <link href="https://diff.telethon.dev/" type="text/html"/>
+        <id>https://diff.telethon.dev/1675361552</id>
+        <content type="html">&lt;p&gt;2 added, 0 removed, 6 changed&lt;/p&gt;</content>
         <author><name>TL Differ Team</name></author>
     </entry>
 </feed>
