@@ -145,6 +145,7 @@ def pull():
 def extract():
     global in_dev_branch
     tl_paths = list(map(Path, (
+        'Telegram/SourceFiles/mtproto/scheme/api.tl',
         'Telegram/Resources/tl/api.tl',
         'Telegram/Resources/scheme.tl',
         'Telegram/SourceFiles/mtproto/scheme.tl'
@@ -156,6 +157,8 @@ def extract():
 
     for tl_path in tl_paths:
         ensure_dev_branch()
+        layer_tl_path = tl_path.with_name('layer.tl')
+
         for line in run(git_log + [tl_path], stdout=PIPE).stdout.decode().split('\n'):
             commit, date = line.split()
             date = int(date)
@@ -177,8 +180,13 @@ def extract():
 
             with tl_path.open('rb') as fin, out_path.open('wb') as fout:
                 data = fin.read()
+
                 if layer is not None:
                     data += b'\n// LAYER ' + layer + b'\n'
+                elif b'// LAYER' not in data:
+                    with layer_tl_path.open('rb') as lfin:
+                        data += b'\n' + lfin.read().strip() + b'\n'
+
                 fout.write(data)
                 tl[date] = Scheme(data.decode('utf-8'))
 
