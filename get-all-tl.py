@@ -184,8 +184,11 @@ def extract():
                 if layer is not None:
                     data += b'\n// LAYER ' + layer + b'\n'
                 elif b'// LAYER' not in data:
-                    with layer_tl_path.open('rb') as lfin:
-                        data += b'\n' + lfin.read().strip() + b'\n'
+                    try:
+                        with layer_tl_path.open('rb') as lfin:
+                            data += b'\n' + lfin.read().strip() + b'\n'
+                    except FileNotFoundError:
+                        pass
 
                 fout.write(data)
                 tl[date] = Scheme(data.decode('utf-8'))
