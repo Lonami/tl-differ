@@ -104,8 +104,7 @@ class Scheme:
         self.definitions = {}
 
         function = False
-        for m in re.finditer('.+', contents):
-            line = m.group(0)
+        for line in filter(bool, map(str.strip, contents.splitlines())):
             if line == '---functions---':
                 function = True
             elif line == '---types---':
