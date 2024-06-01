@@ -65,7 +65,7 @@ class Definition:
 
         left, right = line.split(maxsplit=1)
         if '#' in left:
-            self.name, self.id = left.split('#')
+            self.name, self.id, *_ = left.split('#')  # there's a mess up with multiple #ids, hence the glob
             self.id = int(self.id, 16)
         else:
             self.name, self.id = left, None
