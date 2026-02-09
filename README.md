@@ -1,3 +1,7 @@
+Moved to https://codeberg.org/Lonami/tl-differ. The GitHub repository may be deleted in the future.
+
+---
+
 # Type Language Differ
 
 ## Using
